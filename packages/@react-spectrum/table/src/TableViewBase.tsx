@@ -321,6 +321,12 @@ function TableViewBase<T extends object>(props: TableBaseProps<T>, ref: DOMRef<H
       case 'headerrow':
         return null;
       case 'cell': {
+        let prevCell = item.prevKey ? state.collection.getItem(item.prevKey) : null;
+        let prevColIndex = prevCell?.colIndex !== undefined ? prevCell.colIndex : 0;
+        let prevColSpan = prevCell?.colspan !== undefined ? prevCell.colspan : 1;
+
+        item.colIndex = prevColIndex + prevColSpan;
+
         if (item.props.colSpan) {
           item.colspan = item.props.colSpan;
         }
